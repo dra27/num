@@ -7,7 +7,7 @@
   (libraries num.core))
 
 (library
-  (name num_core)
+  (name nums)
   (public_name num.core)
   (wrapped false)
   (modules arith_flags arith_status big_int int_misc nat num ratio)
