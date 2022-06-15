@@ -6,13 +6,16 @@
   (synopsis "Arbitrary-precision rational arithmetic")
   (libraries num.core))
 
+(foreign_library
+  (archive_name nums)
+  (language c)
+  (names nat_stubs bng)
+  (extra_deps (glob_files *.c))
+  (flags "-DBNG_ARCH_%{architecture}"))
+
 (library
   (name nums)
   (public_name num.core)
   (wrapped false)
   (modules arith_flags arith_status big_int int_misc nat num ratio)
-  (foreign_stubs
-   (language c)
-   (names nat_stubs bng)
-   (extra_deps (glob_files *.c))
-   (flags "-DBNG_ARCH_%{architecture}")))
+  (foreign_archives nums))
