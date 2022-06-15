@@ -1,5 +1,5 @@
 (library
-  (name num)
+  (name nums)
   (public_name num)
   (wrapped false)
   (modules )
