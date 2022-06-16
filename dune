@@ -14,3 +14,20 @@
     (flags (:include warnings.sexp) -warn-error +A (:include flags.sexp)))
   (release
     (flags (:include warnings.sexp) (:include flags.sexp))))
+
+(rule
+  (with-stdout-to META.num.template
+    (echo "version = \"%{version:num}\"\n\
+           requires = \"num.core\"\n\
+           requires(toploop) = \"num.core,num-top\"\n\
+           description = \"Arbitrary-precision rational arithmetic\"\n\n\
+           # DUNE_GEN\n\
+           package \"core\" (\n  \
+             directory = \"^\"\n  \
+             version = \"%{version:num}\"\n  \
+             browse_interfaces = \"\"\n  \
+             archive(byte) = \"nums.cma\"\n  \
+             archive(native) = \"nums.cmxa\"\n  \
+             plugin(byte) = \"nums.cma\"\n  \
+             plugin(native) = \"nums.cmxs\"\n\
+           )\n")))

@@ -1,14 +1,24 @@
 (library
   (name num_top)
   (public_name num.top)
-  (libraries num compiler-libs)
+  (libraries compiler-libs)
   (wrapped false)
-  (modes byte))
+  (modes byte)
+  (synopsis "Interal nums library - do not use directly"))
 
 (rule
   (with-stdout-to META.shim
-    (progn (echo "requires = \"num.top\"\nversion = \"%{version:num}\"\ndescription = \"Add-on for num inside toploops\"\n"))))
+    (progn (echo "requires = \"num.core\"\narchive(byte,toploop) = \"num_top.cma\"\nversion = \"%{version:num}\"\ndescription = \"Add-on for num inside toploops\"\n"))))
 
 (install
   (files (META.shim as num-top/META))
   (section lib_root))
+
+(install
+  (files (num_top.cma as num-top/num_top.cma)
+         (num_top.cmi as num-top/num_top.cmi)
+         (num_top_printers.cmi as num-top/num_top_printers.cmi))
+  (section lib_root))
+
+(rule (copy %{cmi:num_top} num_top.cmi))
+(rule (copy %{cmi:num_top_printers} num_top_printers.cmi))

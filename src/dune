@@ -1,11 +1,3 @@
-(library
-  (name nums)
-  (public_name num)
-  (wrapped false)
-  (modules )
-  (synopsis "Arbitrary-precision rational arithmetic")
-  (libraries num.core))
-
 (foreign_library
   (archive_name nums)
   (language c)
@@ -13,9 +5,12 @@
   (extra_deps (glob_files *.c))
   (flags "-DBNG_ARCH_%{architecture}"))
 
+(include install-legacy)
+
 (library
-  (name num_core)
-  (public_name num.core)
+  (name nums)
+  (public_name num.private)
   (wrapped false)
   (modules arith_flags arith_status big_int int_misc nat num ratio)
+  (synopsis "Internal nums library - do not use directly")
   (foreign_archives nums))
