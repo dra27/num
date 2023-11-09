@@ -14,8 +14,10 @@ depends: [
   "ocaml" {>= "4.06.0"}
 ]
 build: [
+  ["dune" "subst"] {dev & dune:installed}
+  ["dune" "build" "-p" name "-j" jobs "@install" "@runtest" {with-test}] {dune:installed & ocaml:version > "5.0.0~~"}
   [make "PROFILE=release"
         "opam-legacy" {!ocaml:preinstalled & ocaml:version < "5.0.0~~"}
-        "opam-modern" {ocaml:preinstalled | ocaml:version >= "5.0.0~~"}]
-  [make "test"] {with-test}
+        "opam-modern" {ocaml:preinstalled | ocaml:version >= "5.0.0~~"}] {!dune:installed | ocaml:version < "5.0.0~~"}
+  [make "test"] {with-test & (!dune:installed | ocaml:version < "5.0.0~~")}
 ]
