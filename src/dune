@@ -1,10 +1,10 @@
 (library
-  (name num)
+  (name nums)
   (public_name num)
   (wrapped false)
-  (modules )
+  (modules arith_flags arith_status big_int int_misc nat num ratio)
   (synopsis "Arbitrary-precision rational arithmetic")
-  (libraries num.core))
+  (foreign_archives nums))
 
 (foreign_library
   (archive_name nums)
@@ -14,8 +14,8 @@
   (flags "-DBNG_ARCH_%{architecture}"))
 
 (library
-  (name nums)
+  (name num_core)
   (public_name num.core)
   (wrapped false)
-  (modules arith_flags arith_status big_int int_misc nat num ratio)
-  (foreign_archives nums))
+  (modules )
+  (libraries num))

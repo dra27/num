@@ -1,14 +1,20 @@
 (library
   (name num_top)
-  (public_name num.top)
-  (libraries num compiler-libs)
+  (libraries num.core compiler-libs)
   (wrapped false)
   (modes byte))
 
 (rule
   (with-stdout-to META.shim
-    (progn (echo "requires = \"num.top\"\nversion = \"%{version:num}\"\ndescription = \"Add-on for num inside toploops\"\n"))))
+    (progn (echo "version = \"%{version:num}\"\n")
+           (cat ../src/META.num-top.in))))
 
 (install
-  (files (META.shim as num-top/META))
+  (files (META.shim as num-top/META)
+         (num_top.cma as num-top/num_top.cma)
+         (num_top_printers.cmi as num-top/num_top_printers.cmi)
+         (num_top.cmi as num-top/num_top.cmi))
   (section lib_root))
+
+(rule (copy %{cmi:num_top_printers} num_top_printers.cmi))
+(rule (copy %{cmi:num_top} num_top.cmi))
